@@ -6,3 +6,4 @@ TestResults/
 *.user
 *.suo
 .coverage
+# Esto es un comentario de prueba
