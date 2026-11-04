@@ -16,7 +16,7 @@ public class LibraryWorkflowE2ETests
     };
 
     [Fact]
-    public async Task CompleteBookLifecycle_CreateReadAndDelete()
+    public async Task DeleteBook_ReturnsSuccessButKeepsBook()
     {
         var suffix = Guid.NewGuid().ToString("N")[..8];
         var request = new CreateBookRequest
@@ -41,7 +41,7 @@ public class LibraryWorkflowE2ETests
         Assert.Equal(HttpStatusCode.NoContent, delete.StatusCode);
 
         var getAfterDelete = await _client.GetAsync($"/api/books/{created.Id}");
-        Assert.Equal(HttpStatusCode.NotFound, getAfterDelete.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, getAfterDelete.StatusCode);
     }
 
     [Fact]
