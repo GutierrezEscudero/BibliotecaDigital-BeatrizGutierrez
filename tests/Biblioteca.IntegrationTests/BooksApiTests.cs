@@ -56,6 +56,23 @@ public class BooksApiTests(ApiFactory factory) : IClassFixture<ApiFactory>
     }
 
     [Fact]
+    public async Task CreateBook_WithInvalidData_ReturnsBadRequest()
+    {
+        var request = new CreateBookRequest
+        {
+            Title = "",
+            Author = "A",
+            Isbn = "invalid",
+            PublishedYear = 1200,
+            AvailableCopies = -1
+        };
+
+        var response = await _client.PostAsJsonAsync("/api/books", request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task DeleteBook_WithUnknownId_ReturnsNotFound()
     {
         var response = await _client.DeleteAsync("/api/books/9999");

@@ -49,7 +49,8 @@ jobs:
       - name: Restaurar dependencias
         run: dotnet restore BibliotecaDigitalE2E.sln
 
-      - name: Iniciar an√°lisis de SonarQube Cloud
+      - name: Iniciar an·lisis de SonarQube Cloud
+        id: sonar_begin
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
@@ -132,7 +133,8 @@ jobs:
             kill "$(cat api.pid)" || true
           fi
 
-      - name: Finalizar an√°lisis de SonarQube Cloud
+      - name: Finalizar an·lisis de SonarQube Cloud
+        if: ${{ always() && steps.sonar_begin.outcome == 'success' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
