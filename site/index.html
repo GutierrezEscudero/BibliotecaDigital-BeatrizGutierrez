@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <meta name="description"
+          content="Portal de presentación de Biblioteca Digital, API
+desarrollada con .NET 10.">
+    <title>Biblioteca Digital</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a class="brand" href="./">
+                Biblioteca Digital
+            </a>
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#api">API</a>
+                <a href="#automatizacion">Automatización</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container">
+                <p class="eyebrow">API REST · .NET 10</p>
+                <h1>Tu biblioteca digital</h1>
+                <p class="hero-description">
+                    Proyecto de ejemplo para la gestión de un catálogo
+                    de libros y sus préstamos.
+                </p>
+                <p class="hero-note">
+                    Portal web estático complementario de Biblioteca
+                    Digital.
+                </p>
+                <a href="#catalogo" class="button">
+                    Explorar catálogo
+                </a>
+            </div>
+        </section>
+        <section id="catalogo" class="section">
+            <div class="container">
+                <p class="eyebrow">CATÁLOGO</p>
+                <h2>Libros disponibles</h2>
+                <p>
+                    Consulta los libros de ejemplo incluidos en el
+                    proyecto.
+                </p>
+                <div class="catalog-controls">
+                    <input type="search"
+                           id="search-input"
+                           placeholder="Buscar un libro..."
+                           aria-label="Buscar libros por título">
+                    <label class="filter-control">
+                        <input type="checkbox"
+                               id="available-filter">
+                        Mostrar solo libros disponibles
+                    </label>
+                </div>
+                <div id="book-list"
+                     class="book-grid"
+                     aria-live="polite">
+                </div>
+                <p id="empty-state" class="empty-state" hidden>
+                    No se han encontrado libros.
+                </p>
+            </div>
+        </section>
+        <section id="api" class="section section-alt">
+            <div class="container">
+                <p class="eyebrow">BACKEND</p>
+                <h2>API REST de Biblioteca Digital</h2>
+                <p>
+                    La API está desarrollada con ASP.NET Core y .NET 10.
+                    Permite gestionar los libros y los préstamos.
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Endpoint</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>/api/health</td>
+                                <td>Comprobar el estado de la API</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/api/books</td>
+                                <td>Consultar todos los libros</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/api/books/{id}</td>
+                                <td>Consultar un libro</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>/api/books</td>
+                                <td>Crear un libro</td>
+                            </tr>
+                            <tr>
+                                <td>DELETE</td>
+                                <td>/api/books/{id}</td>
+                                <td>Eliminar un libro</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/api/loans</td>
+                                <td>Consultar préstamos</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/api/loans/{id}</td>
+                                <td>Consultar un préstamo</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>/api/loans</td>
+                                <td>Crear un préstamo</td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>/api/loans/{id}/return</td>
+                                <td>Devolver un préstamo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="notice">
+                    <strong>Información importante</strong>
+                    <p>
+                        Esta web se publica como contenido estático
+                        mediante GitHub Pages. La API .NET no está
+                        desplegada en este alojamiento y sus endpoints
+                        no se pueden ejecutar desde este portal.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="automatizacion" class="section">
+            <div class="container">
+                <p class="eyebrow">INTEGRACIÓN CONTINUA</p>
+                <h2>Automatización del proyecto</h2>
+                <p>
+                    El repositorio utiliza GitHub Actions para
+                    automatizar
+                    diferentes tareas del ciclo de desarrollo.
+                </p>
+                <div class="workflow-grid">
+                    <article class="workflow-card">
+                        <h3>Pruebas automatizadas</h3>
+                        <p>
+                            Ejecuta las pruebas unitarias, de
+                            integración
+                            y E2E del proyecto.
+                        </p>
+                        <span class="workflow-label">
+                            tests.yml
+                        </span>
+                    </article>
+                    <article class="workflow-card">
+                        <h3>Análisis de calidad</h3>
+                        <p>
+                            Analiza el código y genera información sobre
+                            calidad y cobertura.
+                        </p>
+                        <span class="workflow-label">
+                            sonar-quality.yml
+                        </span>
+                    </article>
+                    <article class="workflow-card">
+                        <h3>Despliegue web</h3>
+                        <p>
+                            Publica automáticamente este portal
+                            en GitHub Pages.
+                        </p>
+                        <span class="workflow-label">
+                            deploy-pages.yml
+                        </span>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <p>
+                Biblioteca Digital · Proyecto formativo con .NET 10
+            </p>
+            <p>
+                <span id="current-year"></span>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
