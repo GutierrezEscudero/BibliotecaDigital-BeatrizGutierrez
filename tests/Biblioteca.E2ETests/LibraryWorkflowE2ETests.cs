@@ -6,13 +6,13 @@ using Xunit;
 namespace Biblioteca.E2ETests;
 
 // These tests call a separately running API over real HTTP (Kestrel).
-// Set E2E_BASE_URL to override the default address.
+// Set E2E_BASE_URL to override the API launch profile's HTTP address.
 public class LibraryWorkflowE2ETests
 {
     private readonly HttpClient _client = new()
     {
         BaseAddress = new Uri(
-            Environment.GetEnvironmentVariable("E2E_BASE_URL") ?? "http://localhost:5080")
+            Environment.GetEnvironmentVariable("E2E_BASE_URL") ?? "http://localhost:52749")
     };
 
     [Fact]
