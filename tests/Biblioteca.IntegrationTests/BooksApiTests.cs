@@ -55,5 +55,53 @@ public class BooksApiTests(ApiFactory factory) : IClassFixture<ApiFactory>
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
     }
 
+    [Fact]
+    public async Task DeleteBook_WithUnknownId_ReturnsNotFound()
+    {
+        var response = await _client.DeleteAsync("/api/books/9999");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteBook_WithoutActiveLoans_ReturnsNoContent()
+    {
+        var request = new CreateBookRequest
+        {
+            Title = "Libro para eliminar",
+            Author = "Autor de pruebas",
+            Isbn = $"978{Random.Shared.Next(1_000_000_000, 1_999_999_999)}",
+            PublishedYear = 2020,
+            AvailableCopies = 1
+        };
+        var createResponse = await _client.PostAsJsonAsync("/api/books", request);
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+
+        var createdBook = await createResponse.Content.ReadFromJsonAsync<BookResponse>();
+        Assert.NotNull(createdBook);
+
+        var deleteResponse = await _client.DeleteAsync($"/api/books/{createdBook.Id}");
+
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteBook_WithActiveLoan_ReturnsConflict()
+    {
+        var request = new CreateLoanRequest
+        {
+            BookId = 1,
+            Borrower = "Lector de pruebas",
+            LoanDate = new DateOnly(2026, 11, 3),
+            DueDate = new DateOnly(2026, 11, 17)
+        };
+        var loanResponse = await _client.PostAsJsonAsync("/api/loans", request);
+        Assert.Equal(HttpStatusCode.Created, loanResponse.StatusCode);
+
+        var deleteResponse = await _client.DeleteAsync("/api/books/1");
+
+        Assert.Equal(HttpStatusCode.Conflict, deleteResponse.StatusCode);
+    }
+
     private sealed record BookResponse(int Id, string Title, string Author, string Isbn, int PublishedYear, int AvailableCopies);
 }
