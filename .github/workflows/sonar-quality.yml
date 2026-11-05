@@ -1,4 +1,4 @@
-name: SonarQube Cloud - An√°lisis de calidad
+Ôªøname: SonarQube Cloud - An√°lisis de calidad
 
 on:
   push:
@@ -59,7 +59,7 @@ jobs:
       - name: Restaurar dependencias
         run: dotnet restore BibliotecaDigitalE2E.sln
 
-      - name: Iniciar an·lisis de SonarQube Cloud
+      - name: Iniciar analisis de SonarQube Cloud
         id: sonar_begin
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -145,7 +145,7 @@ jobs:
             kill "$(cat api.pid)" || true
           fi
 
-      - name: Finalizar an·lisis de SonarQube Cloud
+      - name: Finalizar analisis de SonarQube Cloud
         if: ${{ always() && steps.sonar_begin.outcome == 'success' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
