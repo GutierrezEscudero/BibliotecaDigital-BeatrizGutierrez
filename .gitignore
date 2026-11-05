@@ -3,6 +3,8 @@
 .vs/
 .vscode/
 TestResults/
+coverage/
+node_modules/
 *.user
 *.suo
 .coverage
