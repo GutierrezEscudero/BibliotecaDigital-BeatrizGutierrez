@@ -38,6 +38,16 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Generar cobertura del sitio web
+        run: |
+          npm install
+          npm run coverage:frontend
+
       - name: Comprobar versión de .NET
         run: dotnet --info
 
@@ -49,7 +59,8 @@ jobs:
       - name: Restaurar dependencias
         run: dotnet restore BibliotecaDigitalE2E.sln
 
-      - name: Iniciar análisis de SonarQube Cloud
+      - name: Iniciar an�lisis de SonarQube Cloud
+        id: sonar_begin
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
@@ -61,6 +72,8 @@ jobs:
             /d:sonar.token="$SONAR_TOKEN" \
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+            /d:sonar.javascript.lcov.reportPaths="coverage/lcov.info" \
+            /d:sonar.coverage.exclusions="site/index.html,site/styles.css" \
             /d:sonar.qualitygate.wait=true
 
       - name: Compilar solución para análisis
@@ -132,7 +145,8 @@ jobs:
             kill "$(cat api.pid)" || true
           fi
 
-      - name: Finalizar análisis de SonarQube Cloud
+      - name: Finalizar an�lisis de SonarQube Cloud
+        if: ${{ always() && steps.sonar_begin.outcome == 'success' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
