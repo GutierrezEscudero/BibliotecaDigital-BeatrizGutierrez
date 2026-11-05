@@ -1,4 +1,4 @@
-name: SonarQube Cloud - An谩lisis de calidad
+锘縩ame: SonarQube Cloud - Analisis de calidad
 
 on:
   push:
@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   quality:
-    name: Compilaci贸n, cobertura y an谩lisis
+    name: Compilacion, cobertura y analisis
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -48,7 +48,7 @@ jobs:
           npm install
           npm run coverage:frontend
 
-      - name: Comprobar versi贸n de .NET
+      - name: Comprobar version de .NET
         run: dotnet --info
 
       - name: Instalar SonarScanner para .NET
@@ -59,7 +59,7 @@ jobs:
       - name: Restaurar dependencias
         run: dotnet restore BibliotecaDigitalE2E.sln
 
-      - name: Iniciar an醠isis de SonarQube Cloud
+      - name: Iniciar analisis de SonarQube Cloud
         id: sonar_begin
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -76,7 +76,7 @@ jobs:
             /d:sonar.coverage.exclusions="site/index.html,site/styles.css" \
             /d:sonar.qualitygate.wait=true
 
-      - name: Compilar soluci贸n para an谩lisis
+      - name: Compilar solucion para analisis
         run: |
           dotnet build BibliotecaDigitalE2E.sln \
             --configuration Release \
@@ -94,7 +94,7 @@ jobs:
             --results-directory TestResults/Unit \
             --logger "trx;LogFileName=unit-tests.trx"
 
-      - name: Pruebas de integraci贸n y cobertura
+      - name: Pruebas de integracion y cobertura
         run: |
           dotnet test tests/Biblioteca.IntegrationTests/Biblioteca.IntegrationTests.csproj \
             --configuration Release \
@@ -145,7 +145,7 @@ jobs:
             kill "$(cat api.pid)" || true
           fi
 
-      - name: Finalizar an醠isis de SonarQube Cloud
+      - name: Finalizar analisis de SonarQube Cloud
         if: ${{ always() && steps.sonar_begin.outcome == 'success' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
