@@ -1,5 +1,5 @@
 // JavaScript source code
-const books = [
+export const books = [
     {
         id: 1,
         title: "Cien años de soledad",
@@ -16,11 +16,11 @@ const books = [
         availableCopies: 0
     }
 ];
-const bookList = document.getElementById("book-list");
-const searchInput = document.getElementById("search-input");
-const availableFilter = document.getElementById("available-filter");
-const emptyState = document.getElementById("empty-state");
-function renderBooks() {
+export function renderBooks() {
+    const bookList = document.getElementById("book-list");
+    const searchInput = document.getElementById("search-input");
+    const availableFilter = document.getElementById("available-filter");
+    const emptyState = document.getElementById("empty-state");
     const searchText = searchInput.value
         .trim()
         .toLocaleLowerCase("es");
@@ -58,8 +58,17 @@ function renderBooks() {
         bookList.appendChild(card);
     });
 }
-searchInput.addEventListener("input", renderBooks);
-availableFilter.addEventListener("change", renderBooks);
-document.getElementById("current-year").textContent =
-    new Date().getFullYear();
-renderBooks();
+
+export function initializeCatalog() {
+    document.getElementById("search-input")
+        .addEventListener("input", renderBooks);
+    document.getElementById("available-filter")
+        .addEventListener("change", renderBooks);
+    document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+    renderBooks();
+}
+
+if (typeof document !== "undefined") {
+    initializeCatalog();
+}
