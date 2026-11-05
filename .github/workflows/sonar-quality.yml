@@ -1,4 +1,4 @@
-﻿name: SonarQube Cloud - Análisis de calidad
+﻿name: SonarQube Cloud - Analisis de calidad
 
 on:
   push:
@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   quality:
-    name: Compilación, cobertura y análisis
+    name: Compilacion, cobertura y analisis
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -48,7 +48,7 @@ jobs:
           npm install
           npm run coverage:frontend
 
-      - name: Comprobar versión de .NET
+      - name: Comprobar version de .NET
         run: dotnet --info
 
       - name: Instalar SonarScanner para .NET
@@ -76,7 +76,7 @@ jobs:
             /d:sonar.coverage.exclusions="site/index.html,site/styles.css" \
             /d:sonar.qualitygate.wait=true
 
-      - name: Compilar solución para análisis
+      - name: Compilar solucion para analisis
         run: |
           dotnet build BibliotecaDigitalE2E.sln \
             --configuration Release \
@@ -94,7 +94,7 @@ jobs:
             --results-directory TestResults/Unit \
             --logger "trx;LogFileName=unit-tests.trx"
 
-      - name: Pruebas de integración y cobertura
+      - name: Pruebas de integracion y cobertura
         run: |
           dotnet test tests/Biblioteca.IntegrationTests/Biblioteca.IntegrationTests.csproj \
             --configuration Release \
