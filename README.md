@@ -66,3 +66,23 @@ Por defecto, las E2E usan `http://localhost:52749`, el mismo puerto HTTP que el 
 - `tests/Biblioteca.UnitTests`: pruebas de las reglas de negocio.
 - `tests/Biblioteca.IntegrationTests`: pruebas HTTP con `WebApplicationFactory`.
 - `tests/Biblioteca.E2ETests`: flujos completos contra una API iniciada con Kestrel.
+
+## Portal web publicado
+
+El portal web está disponible en:
+
+<https://gutierrezescudero.github.io/BibliotecaDigital-BeatrizGutierrez/>
+
+La web es un sitio estático formado por HTML, CSS y JavaScript, publicado mediante GitHub Pages.
+
+La API ASP.NET Core no está desplegada en GitHub Pages. Para ejecutarla localmente es necesario utilizar el SDK de .NET 10 y arrancarla desde el proyecto `src/Biblioteca.Api`.
+
+## Workflows de GitHub Actions
+
+El repositorio dispone de tres workflows:
+
+- `.github/workflows/tests.yml`: compila la solución y ejecuta las pruebas unitarias, de integración y E2E.
+- `.github/workflows/sonar-quality.yml`: analiza la calidad del código con SonarQube Cloud y genera los informes de cobertura.
+- `.github/workflows/deploy-pages.yml`: comprueba y publica el portal estático de la carpeta `site/` en GitHub Pages.
+
+El despliegue definitivo del portal solo se realiza cuando los cambios llegan a la rama `main`.
